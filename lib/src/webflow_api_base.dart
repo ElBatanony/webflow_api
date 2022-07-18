@@ -46,4 +46,18 @@ class Webflow {
     Collection collection = Collection.fromJson(json);
     return collection;
   }
+
+  // Items
+
+  Future<ItemsResponse> items(String collectionId,
+      {int offset = 0, int limit = 100}) async {
+    var url = Uri.https(endpoint, "/collections/$collectionId/items",
+        {"offset": offset.toString(), "limit": limit.toString()});
+
+    var response = await http.get(url, headers: headers);
+
+    dynamic json = jsonDecode(response.body);
+    ItemsResponse itemsResponse = ItemsResponse.fromJson(json);
+    return itemsResponse;
+  }
 }
