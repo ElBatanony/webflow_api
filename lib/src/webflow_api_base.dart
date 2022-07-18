@@ -5,10 +5,6 @@ import 'package:http/http.dart' as http;
 import 'webflow_api_models.dart';
 export 'webflow_api_models.dart';
 
-class Awesome {
-  bool get isAwesome => true;
-}
-
 class Webflow {
   String endpoint;
   String token;
