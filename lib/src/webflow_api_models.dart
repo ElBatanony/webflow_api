@@ -26,3 +26,31 @@ class Field {
         slug = json['slug'],
         name = json['name'];
 }
+
+class Item {
+  String id, collectionId, name, slug;
+  bool archived, draft;
+  Map<String, dynamic> json;
+
+  Item.fromJson(this.json)
+      : archived = json['_archived'],
+        draft = json['_draft'],
+        id = json['_id'],
+        collectionId = json['_cid'],
+        name = json['name'],
+        slug = json['slug'];
+}
+
+class ItemsResponse {
+  int count, limit, offset, total;
+  List<Item> items;
+
+  ItemsResponse.fromJson(Map<String, dynamic> json)
+      : count = json['count'],
+        limit = json['limit'],
+        offset = json['offset'],
+        total = json['total'],
+        items = ((json["items"] ?? []) as List)
+            .map((e) => Item.fromJson(e))
+            .toList();
+}
