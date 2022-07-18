@@ -1,6 +1,10 @@
-// TODO: Put public facing types in this file.
+import 'dart:convert';
 
-/// Checks if you are awesome. Spoiler: you are.
+import 'package:http/http.dart' as http;
+
+import 'webflow_api_models.dart';
+export 'webflow_api_models.dart';
+
 class Awesome {
   bool get isAwesome => true;
 }
@@ -26,4 +30,24 @@ class Webflow {
     };
   }
 
+  // Collections
+
+  Future<List<Collection>> collections() async {
+    var url = Uri.https(endpoint, "/sites/$siteId/collections");
+
+    var response = await http.get(url, headers: headers);
+
+    List json = jsonDecode(response.body) as List;
+    List<Collection> collections =
+        json.map((e) => Collection.fromJson(e)).toList();
+    return collections;
+  }
+
+  Future<Collection> collection(String collectionId) async {
+    var url = Uri.https(endpoint, "/collections/$collectionId");
+    var response = await http.get(url, headers: headers);
+    dynamic json = jsonDecode(response.body);
+    Collection collection = Collection.fromJson(json);
+    return collection;
+  }
 }
