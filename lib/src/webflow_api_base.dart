@@ -60,6 +60,17 @@ class Webflow {
     ItemsResponse itemsResponse = ItemsResponse.fromJson(json);
     return itemsResponse;
   }
+
+  Future<ItemsResponse> item({
+    required String collectionId,
+    required String itemId,
+  }) async {
+    Uri url = Uri.https(endpoint, "/collections/$collectionId/items/$itemId");
+
+    http.Response response = await http.get(url, headers: headers);
+
+    return ItemsResponse.fromJson(jsonDecode(response.body));
+  }
   Future<int> removeItem({
     required String collectionId,
     required String itemId,
