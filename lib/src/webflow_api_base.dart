@@ -60,4 +60,19 @@ class Webflow {
     ItemsResponse itemsResponse = ItemsResponse.fromJson(json);
     return itemsResponse;
   }
+  Future<Item> updateItem({
+    required String collectionId,
+    required String itemId,
+    Map<String, dynamic> fields = const {},
+    bool live = false,
+  }) async {
+    Uri url = Uri.https(endpoint, "/collections/$collectionId/items/$itemId", {
+      "live": live.toString(),
+    });
+
+    http.Response response = await http.patch(url,
+        headers: headers, body: jsonEncode({"fields": fields}));
+
+    return Item.fromJson(jsonDecode(response.body));
+  }
 }
