@@ -60,6 +60,22 @@ class Webflow {
     ItemsResponse itemsResponse = ItemsResponse.fromJson(json);
     return itemsResponse;
   }
+  Future<int> removeItem({
+    required String collectionId,
+    required String itemId,
+    bool live = false,
+  }) async {
+    Uri url = Uri.https(endpoint, "/collections/$collectionId/items/$itemId", {
+      "live": live.toString(),
+    });
+
+    http.Response response = await http.delete(url, headers: headers);
+
+    dynamic json = jsonDecode(response.body);
+    int deletedCount = json['deleted'];
+    return deletedCount;
+  }
+
   Future<Item> updateItem({
     required String collectionId,
     required String itemId,
