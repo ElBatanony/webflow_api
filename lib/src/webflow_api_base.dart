@@ -71,6 +71,33 @@ class Webflow {
 
     return ItemsResponse.fromJson(jsonDecode(response.body));
   }
+
+  Future<Item> createItem({
+    required String collectionId,
+    Map<String, dynamic> fields = const {},
+    bool live = false,
+    bool archived = false,
+    bool draft = true,
+  }) async {
+    var url = Uri.https(endpoint, "/collections/$collectionId/items", {
+      "live": live.toString(),
+    });
+
+    http.Response response = await http.post(url,
+        headers: headers,
+        body: jsonEncode(
+          {
+            "fields": {
+              "_archived": archived,
+              "_draft": draft,
+              ...fields,
+            }
+          },
+        ));
+
+    return Item.fromJson(jsonDecode(response.body));
+  }
+
   Future<int> removeItem({
     required String collectionId,
     required String itemId,
