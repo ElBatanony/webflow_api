@@ -1,8 +1,4 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// A package to communicate with the Webflow CMS API
 library webflow_api;
 
 export 'src/webflow_api_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.

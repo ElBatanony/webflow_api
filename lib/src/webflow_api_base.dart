@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'webflow_api_models.dart';
 export 'webflow_api_models.dart';
 
+/// The class that communicates with the Webflow API.
+/// Expects at least two parameters: token and siteId.
+/// These parameters are obrained from the Webflow web dashboard.
 class Webflow {
   String endpoint;
   String token;
@@ -28,6 +31,7 @@ class Webflow {
 
   // Collections
 
+  /// Retreives all the site's CMS collections
   Future<List<Collection>> collections() async {
     var url = Uri.https(endpoint, "/sites/$siteId/collections");
 
@@ -39,6 +43,7 @@ class Webflow {
     return collections;
   }
 
+  /// Retrieves a single CMS collection details, by collection ID
   Future<Collection> collection(String collectionId) async {
     var url = Uri.https(endpoint, "/collections/$collectionId");
     var response = await http.get(url, headers: headers);
@@ -49,6 +54,7 @@ class Webflow {
 
   // Items
 
+  /// Retrieves all the items in a collection, by collection ID
   Future<ItemsResponse> items(String collectionId,
       {int offset = 0, int limit = 100}) async {
     var url = Uri.https(endpoint, "/collections/$collectionId/items",
@@ -61,6 +67,7 @@ class Webflow {
     return itemsResponse;
   }
 
+  /// Retrieves a CMS Item, by collection ID and Item ID
   Future<ItemsResponse> item({
     required String collectionId,
     required String itemId,
@@ -72,6 +79,7 @@ class Webflow {
     return ItemsResponse.fromJson(jsonDecode(response.body));
   }
 
+  /// Creates a new CMS in a collection
   Future<Item> createItem({
     required String collectionId,
     Map<String, dynamic> fields = const {},
@@ -98,6 +106,7 @@ class Webflow {
     return Item.fromJson(jsonDecode(response.body));
   }
 
+  /// Removes (deletes) a CMS collection item, by item ID
   Future<int> removeItem({
     required String collectionId,
     required String itemId,
@@ -114,6 +123,7 @@ class Webflow {
     return deletedCount;
   }
 
+  /// Updates the fields of a CMS collection item
   Future<Item> updateItem({
     required String collectionId,
     required String itemId,

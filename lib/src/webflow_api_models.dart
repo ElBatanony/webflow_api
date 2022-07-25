@@ -1,3 +1,5 @@
+/// A class representing a Webflow CMS Collection.
+/// Gets populated by the retreived JSON from API.
 class Collection {
   String id, lastUpdated, createdOn, name, slug, singularName;
   List<Field> fields;
@@ -14,6 +16,8 @@ class Collection {
             .toList();
 }
 
+/// A class representing a Webflow CMS Item Fields.
+/// Gets populated by the retreived JSON from API.
 class Field {
   String id, type, slug, name;
   bool editable, required;
@@ -27,6 +31,8 @@ class Field {
         name = json['name'];
 }
 
+/// A class representing a Webflow CMS Item.
+/// Gets populated by the retreived JSON from API.
 class Item {
   String id, collectionId, name, slug;
   bool archived, draft;
@@ -41,6 +47,9 @@ class Item {
         slug = json['slug'];
 }
 
+/// A class representing a Webflow CMS Item Response.
+/// Gets populated by the retreived JSON from API.
+/// The item response contains meta information about the response, besides the Item details.
 class ItemsResponse {
   int count, limit, offset, total;
   List<Item> items;
